@@ -165,7 +165,10 @@ static NSString *googleMapsAPIKey;
     [self.operationRequest setTimeoutInterval:kSVGeocoderTimeoutInterval];
 
     [parameters setValue:@"true" forKey:@"sensor"];
-    [parameters setValue:[NSLocale preferredLanguages][0] forKey:@"language"];
+    NSString *language = [NSLocale preferredLanguages].firstObject;
+    NSString *countryCode = [[NSLocale currentLocale] objectForKey: NSLocaleCountryCode];
+    NSString *languageCountryCode = [NSString stringWithFormat:@"%@-%@",language,countryCode];
+    [parameters setValue:languageCountryCode forKey:@"language"];
     
     if (googleMapsAPIKey) {
         [parameters setValue:googleMapsAPIKey forKey:@"key"];
